@@ -1,0 +1,11 @@
+c:\users\alan\documents\visual studio 2010\Projects\HackeratiStockChart\HackeratiStockChart\bin\Debug\HackeratiStockChart.exe
+c:\users\alan\documents\visual studio 2010\Projects\HackeratiStockChart\HackeratiStockChart\bin\Debug\HackeratiStockChart.pdb
+c:\users\alan\documents\visual studio 2010\Projects\HackeratiStockChart\HackeratiStockChart\obj\x86\Debug\MainWindow.baml
+c:\users\alan\documents\visual studio 2010\Projects\HackeratiStockChart\HackeratiStockChart\obj\x86\Debug\MainWindow.g.cs
+c:\users\alan\documents\visual studio 2010\Projects\HackeratiStockChart\HackeratiStockChart\obj\x86\Debug\App.g.cs
+c:\users\alan\documents\visual studio 2010\Projects\HackeratiStockChart\HackeratiStockChart\obj\x86\Debug\HackeratiStockChart_MarkupCompile.cache
+c:\users\alan\documents\visual studio 2010\Projects\HackeratiStockChart\HackeratiStockChart\obj\x86\Debug\HackeratiStockChart.g.resources
+c:\users\alan\documents\visual studio 2010\Projects\HackeratiStockChart\HackeratiStockChart\obj\x86\Debug\HackeratiStockChart.Properties.Resources.resources
+c:\users\alan\documents\visual studio 2010\Projects\HackeratiStockChart\HackeratiStockChart\obj\x86\Debug\HackeratiStockChart.csproj.GenerateResource.Cache
+c:\users\alan\documents\visual studio 2010\Projects\HackeratiStockChart\HackeratiStockChart\obj\x86\Debug\HackeratiStockChart.exe
+c:\users\alan\documents\visual studio 2010\Projects\HackeratiStockChart\HackeratiStockChart\obj\x86\Debug\HackeratiStockChart.pdb
