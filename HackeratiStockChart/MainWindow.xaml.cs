@@ -24,20 +24,22 @@ namespace HackeratiStockChart
         public MainWindow()
         {
             InitializeComponent();
-            Loaded += new RoutedEventHandler(MainWindow_Loaded);
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            var dataset = new DataSeriesSet<double, double>();
+            var dataset = new DataSeriesSet<DateTime, double>();
             var series = dataset.AddSeries();
 
-            for (int i = 0; i < 1000; i++)
+            var startDate = new DateTime(2000, 1, 1);
+
+            for (int i = 0; i < 4000; i++)
             {
-                series.Append(i, Math.Sin(2 * Math.PI * i / 1000));
+                var curDate = startDate.AddDays(i);
+                series.Append(curDate, 25.0 + 5.0 * Math.Sin(2 * Math.PI * i / 1000));
             }
 
-            sciChartSurface.DataSet = dataset;
+            stockChart.DataSet = dataset;
 
         }
     }

@@ -1,5 +1,5 @@
-StockChart Work Plan
-====================
+StockChart Design & Work Plan
+=============================
 
 Below is the work plan for the StockChart application.
 
@@ -19,8 +19,8 @@ Requirements:
  -  The user can select whether to view unaveraged data or a moving average.
  -  The user can opt to display the Dow Jones Industrial Average (DJIA) against their chosen data.
 
-Objectives
-----------
+Work Plan
+---------
 
 #.  Set up development environment. (4 hours)
 

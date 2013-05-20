@@ -2,28 +2,21 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:SciChart="clr-namespace:Abt.Controls.SciChart;assembly=Abt.Controls.SciChart.Wpf"
-        Title="MainWindow" Height="350" Width="525">
+        Title="StockChart" Height="350" Width="525" Loaded="MainWindow_Loaded">
     <Grid>
-        <SciChart:SciChartSurface x:Name="sciChartSurface"
-                                  SciChart:ThemeManager.Theme="Chrome">
-            
-            <!-- Defines the renderable series, which map 1:1 to data-series. R-Series may be styled -->
-            <SciChart:SciChartSurface.RenderableSeries>
-                <SciChart:FastLineRenderableSeries SeriesColor="Gray"/>
-            </SciChart:SciChartSurface.RenderableSeries>
 
-            <!-- Defines the XAxis -->
-            <SciChart:SciChartSurface.XAxis>
-                <SciChart:NumericAxis>
-                </SciChart:NumericAxis>
-            </SciChart:SciChartSurface.XAxis>
-
-            <!-- Defines the YAxis -->
-            <SciChart:SciChartSurface.YAxis>
-                <SciChart:NumericAxis>
-                </SciChart:NumericAxis>
-            </SciChart:SciChartSurface.YAxis>
-
-        </SciChart:SciChartSurface>
+        <!-- Create the SciStockChart. In the code-behind we append data and add series -->
+        <SciChart:SciStockChart Grid.Row="1" 
+                                x:Name="stockChart" 
+                                SciChart:ThemeManager.Theme="BlackSteel" 
+                                DrawMinorGridLines="True" 
+                                DrawMajorGridLines="True" 
+                                MinorsPerMajor="5" 
+                                XAxisTextFormatting="dd MMM yyyy" 
+                                YAxisTextFormatting="0.00">
+            <SciChart:SciStockChart.RenderableSeries>
+                <SciChart:FastMountainRenderableSeries  AntiAliasing="False"/>
+            </SciChart:SciStockChart.RenderableSeries>
+        </SciChart:SciStockChart>
     </Grid>
 </Window>
