@@ -22,38 +22,36 @@ Requirements:
 Objectives
 ----------
 
-#.  Set up development environment.
+#.  Set up development environment. (4 hours)
 
-    (install Windows image in Parallels, setup VS2010, install Git)
-	
-    4 hours
-	
-#.  Create application with dummy data to test SciChart.
-	
-	(install SciChart, create project, check code into GitHub, research sample application)
-	2 hours
-	
-#.  Modify application to display stock data.
+     -  install Windows image in Parallels
+     -  setup VS2010 
+     -  install Git)
     
-	(research stock chart functionality, obtain or create test data, modify application)
+#.  Create application with dummy data to test SciChart. (2 hours)
     
-	2 hours
-	
-#.  Add capability to load external data for display.
+     -  install SciChart
+     -  create project
+     -  check code into GitHub
+     -  research sample application
+    
+#.  Modify application to display stock data. (2 hours)
+    
+     -  research stock chart functionality
+     -  obtain or create test data
+     -  modify application
+    
+#.  Add capability to load external data for display. (2 hours)
 
-    (research data loading, add UI code for file loading, obtain real data)
-	
-	2 hours
-	
-#.  Implement moving average filters.
+     -  research data loading
+	 -  add UI code for file loading
+	 -  obtain real data
+    
+#.  Implement moving average filters. (1 hour)
 
-    (add UI code for filter size selection)
-	
-    1 hour
-	
-#.  Add DJIA data.
+     -  add UI code for filter size selection
+    
+#.  Add DJIA data. (1 hour)
 
-    (obtain data, extend interface)
-	
-    1 hour
-
+     -  obtain data
+	 -  extend interface
