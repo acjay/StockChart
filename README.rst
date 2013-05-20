@@ -41,11 +41,12 @@ Work Plan
     -  obtain or create test data
     -  modify application
     
-#.  Add capability to load external data for display. (2 hours)
+#.  Add capability to load external data for display. (3 hours)
 
     -  research data loading
     -  add UI code for file loading
     -  obtain real data
+    -  implement ability to change initial chart display
     
 #.  Implement moving average filters. (1 hour)
 
