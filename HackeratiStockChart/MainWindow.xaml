@@ -3,11 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:SciChart="clr-namespace:Abt.Controls.SciChart;assembly=Abt.Controls.SciChart.Wpf"
         Title="StockChart" Height="350" Width="525" Loaded="MainWindow_Loaded">
-    <Grid>
-
+    <DockPanel LastChildFill="True">
+        <!-- Toolbar -->
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+            <Label Content="Stock Symbol:"></Label>
+            <TextBox Name="StockSymbol" MaxLength="6" Width="75"></TextBox>
+            <Label Content="Averaging:" Height="28" Name="label1" />
+            <ComboBox Height="23" Name="Averaging" Width="120" SelectedIndex="0">
+                <ComboBoxItem Content="None" />
+                <ComboBoxItem Content="50 MA" />
+                <ComboBoxItem Content="100 MA" />
+                <ComboBoxItem Content="200 MA" />
+            </ComboBox>
+            <Button Content="Go" Height="23" Name="Load" Width="75" Click="Load_Click" />
+        </StackPanel>
+        
         <!-- Create the SciStockChart. In the code-behind we append data and add series -->
-        <SciChart:SciStockChart Grid.Row="1" 
-                                x:Name="stockChart" 
+        <SciChart:SciStockChart x:Name="stockChart" 
                                 SciChart:ThemeManager.Theme="BlackSteel" 
                                 DrawMinorGridLines="True" 
                                 DrawMajorGridLines="True" 
@@ -18,5 +30,5 @@
                 <SciChart:FastMountainRenderableSeries  AntiAliasing="False"/>
             </SciChart:SciStockChart.RenderableSeries>
         </SciChart:SciStockChart>
-    </Grid>
+    </DockPanel>
 </Window>
