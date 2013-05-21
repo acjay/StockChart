@@ -43,7 +43,7 @@ namespace HackeratiStockChart
             {
                 dummyQuoteList.Add(startDate.AddDays(i), 0.0);
             }
-            AddSeries(dummyQuoteList, 0);
+            //AddSeries(dummyQuoteList, 0);
         }
 
         private void Load_Click(object sender, RoutedEventArgs e)
@@ -88,7 +88,6 @@ namespace HackeratiStockChart
                 }
             }
 
-            // Reshape -- convert list of tuples to tuple of lists
             return quoteList;
         }
     }
