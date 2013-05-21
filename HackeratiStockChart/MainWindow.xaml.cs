@@ -37,6 +37,11 @@ namespace HackeratiStockChart
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Event called when window is loaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             _dataset = new DataSeriesSet<DateTime, double>();
@@ -46,6 +51,11 @@ namespace HackeratiStockChart
             stockChart.DataSet = _dataset;
         }
 
+        /// <summary>
+        /// Handle click in the Load button to retrieve a quote
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Load_Click(object sender, RoutedEventArgs e)
         {
             // Create URL from text box data
@@ -63,6 +73,11 @@ namespace HackeratiStockChart
             }
         }
 
+        /// <summary>
+        /// Handle a click to select a symbol to delete
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SymbolsAdded_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Trace.WriteLine("Selection changed");
@@ -71,12 +86,22 @@ namespace HackeratiStockChart
             Delete.IsEnabled = SymbolsAdded.SelectedIndex != -1;
         }
 
+        /// <summary>
+        /// Handle the click to delete a selected symbol from the chart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
             DeleteSeries(SymbolsAdded.SelectedItem.ToString());
             SymbolsAdded.Items.Remove(SymbolsAdded.SelectedItem);
         }
 
+        /// <summary>
+        /// Handle click on the checkbox to show/remove the DJIA
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShowDJIA_Clicked(object sender, RoutedEventArgs e)
         {
             if (ShowDJIA.IsChecked == true)
@@ -91,6 +116,11 @@ namespace HackeratiStockChart
 
         // Business logic
 
+        /// <summary>
+        /// Add data for a symbol to the chart
+        /// </summary>
+        /// <param name="quoteList">Retrieved quotes</param>
+        /// <param name="seriesName">Name for the series (symbol + moving average length)</param>
         private void AddSeries(SortedList<DateTime, double> quoteList, string seriesName)
         {
             // Create a new data series
@@ -107,6 +137,10 @@ namespace HackeratiStockChart
             stockChart.ZoomExtents();
         }
 
+        /// <summary>
+        /// Remove data for a symbol from the chart
+        /// </summary>
+        /// <param name="seriesName">Name for the series (symbol + moving average length)</param>
         private void DeleteSeries(string seriesName)
         {
             // Find the series with the given name
@@ -130,6 +164,12 @@ namespace HackeratiStockChart
             }
         }
 
+        /// <summary>
+        /// Retrieve quotes for a given symbol from the Internet
+        /// </summary>
+        /// <param name="symbol">Ticker symbol</param>
+        /// <param name="movingAverage">Length of moving average window</param>
+        /// <returns></returns>
         private SortedList<DateTime, double> GetQuotesForSymbol(string symbol, int movingAverage)
         {
             // Build URL to retrieve stock quote history from Yahoo
@@ -138,15 +178,18 @@ namespace HackeratiStockChart
 
             // Get a stream reader for the CSV-generating quote URL
             var quoteStream = new StreamReader(WebRequest.Create(url).GetResponse().GetResponseStream());
-
-            return ParseQuotesFromStream(movingAverage, quoteStream, 4);
+            return ParseQuotesFromStream(quoteStream, movingAverage, 4);
         }
 
+        /// <summary>
+        /// Get the quote list for the pre-downloaded DJIA data
+        /// </summary>
+        /// <returns>quote list</returns>
         private SortedList<DateTime, double> GetDJIAQuotes()
         {
             // Input the DJIA info from file
             var djiaStream = new StreamReader("DJIA.csv");
-            var fullQuoteList = ParseQuotesFromStream(0, djiaStream, 1);
+            var fullQuoteList = ParseQuotesFromStream(djiaStream, 0, 1);
 
             // Narrow down the DJIA info to the range we're interested in
             var quoteList = new SortedList<DateTime, double>();
@@ -160,7 +203,16 @@ namespace HackeratiStockChart
             return quoteList;
         }
 
-        private SortedList<DateTime, double> ParseQuotesFromStream(int movingAverage, StreamReader quoteStream, int indexForPrice)
+        /// <summary>
+        /// Parse stock quotes from a CSV stream
+        /// 
+        /// Date is assumed to be in YYYY-MM-DD format and in the first field
+        /// </summary>
+        /// <param name="quoteStream">CSV stream with headers</param>
+        /// <param name="movingAverage">The length of the moving average window</param>
+        /// <param name="indexForPrice">The index of the CSV field containing the price</param>
+        /// <returns>quote list</returns>
+        private SortedList<DateTime, double> ParseQuotesFromStream(StreamReader quoteStream, int movingAverage, int indexForPrice)
         {
             // Use the CSV reader to parse the dates and closing prices of the quotes
             var quoteList = new SortedList<DateTime, double>();
@@ -221,16 +273,24 @@ namespace HackeratiStockChart
             return quoteList;
         }
 
-        private SortedList<DateTime, double> MovingAverage(SortedList<DateTime, double> startList, int averageLength)
+        /// <summary>
+        /// Computes the moving average of a quote list
+        /// 
+        /// Leaves off the first N-1 points before the window is fileld with data
+        /// </summary>
+        /// <param name="quoteList">The quote list to average</param>
+        /// <param name="averageLength">The length of the moving average window</param>
+        /// <returns>moving average quote list</returns>
+        private SortedList<DateTime, double> MovingAverage(SortedList<DateTime, double> quoteList, int averageLength)
         {
 
-            return startList.Skip(averageLength - 1).Aggregate(
+            return quoteList.Skip(averageLength - 1).Aggregate(
                 new
                 {
                     // Initialize list to hold results
                     Result = new SortedList<DateTime, double>(),
                     // Initialize Working list with the first N-1 items
-                    Working = new List<double>(startList.Take(averageLength - 1).Select(item => item.Value))
+                    Working = new List<double>(quoteList.Take(averageLength - 1).Select(item => item.Value))
                 },
                 (list, item) =>
                 {
