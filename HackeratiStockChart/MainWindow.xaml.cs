@@ -35,15 +35,6 @@ namespace HackeratiStockChart
         {
             _dataset = new DataSeriesSet<DateTime, double>();
             stockChart.DataSet = _dataset;
-
-            // Add a dummy series to start with (prevents future errors)
-            var dummyQuoteList = new SortedList<DateTime, double>();
-            var startDate = new DateTime(2010, 1, 1);
-            for (int i = 0; i < 1000; i++)
-            {
-                dummyQuoteList.Add(startDate.AddDays(i), 0.0);
-            }
-            //AddSeries(dummyQuoteList, 0);
         }
 
         private void Load_Click(object sender, RoutedEventArgs e)
