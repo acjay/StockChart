@@ -9,17 +9,23 @@
             <Border BorderThickness="2" Margin="3" Padding="3" BorderBrush="#FF888888">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Add chart for  symbol:"></Label>
-                    <TextBox Name="StockSymbol" MaxLength="6" Width="75"></TextBox>
-                    <Label Content="Averaging:" Height="28" Name="label1" />
+                    <TextBox Name="StockSymbol" MaxLength="6" Width="75" VerticalAlignment="Center"></TextBox>
+                    <Label Content="Moving average:" Height="28" Name="label1" />
                     <ComboBox Height="23" Name="Averaging" Width="120" SelectedIndex="0">
                         <ComboBoxItem Content="None" />
-                        <ComboBoxItem Content="50 MA" />
-                        <ComboBoxItem Content="100 MA" />
-                        <ComboBoxItem Content="200 MA" />
+                        <ComboBoxItem Content="50" />
+                        <ComboBoxItem Content="100" />
+                        <ComboBoxItem Content="200" />
                     </ComboBox>
                     <Button Content="Go" Height="23" Name="Load" Width="75" Click="Load_Click" />
                 </StackPanel>
             </Border>
+        </StackPanel>
+        
+        <StackPanel DockPanel.Dock="Right">
+            <Label Content="Symbols:" />
+            <ListBox Height="200" Name="SymbolsAdded" Width="120" SelectionChanged="SymbolsAdded_SelectionChanged" />
+            <Button Content="Delete" Height="23" Name="Delete" Width="120" Click="Delete_Click" IsEnabled="False" />
         </StackPanel>
         
         <!-- Create the SciStockChart. In the code-behind we append data and add series -->
