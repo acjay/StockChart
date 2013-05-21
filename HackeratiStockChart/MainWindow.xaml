@@ -8,7 +8,7 @@
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
             <Border BorderThickness="2" Margin="3" Padding="3" BorderBrush="#FF888888">
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Add chart for  symbol:"></Label>
+                    <Label Content="Add chart for symbol:"></Label>
                     <TextBox Name="StockSymbol" MaxLength="6" Width="75" VerticalAlignment="Center"></TextBox>
                     <Label Content="Moving average:" Height="28" Name="label1" />
                     <ComboBox Height="23" Name="Averaging" Width="120" SelectedIndex="0">
@@ -20,6 +20,7 @@
                     <Button Content="Go" Height="23" Name="Load" Width="75" Click="Load_Click" />
                 </StackPanel>
             </Border>
+            <CheckBox Content="Show DJIA" Height="16" Name="ShowDJIA" Click="ShowDJIA_Clicked" />
         </StackPanel>
         
         <StackPanel DockPanel.Dock="Right">

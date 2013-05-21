@@ -30,6 +30,8 @@ namespace HackeratiStockChart
         private DateTime StartDate;
         private DateTime EndDate;
 
+        private SortedList<DateTime, double> DJIA; 
+
         public MainWindow()
         {
             InitializeComponent();
@@ -40,6 +42,7 @@ namespace HackeratiStockChart
             _dataset = new DataSeriesSet<DateTime, double>();
             StartDate = new DateTime(2000, 1, 1);
             EndDate = DateTime.Today;
+            DJIA = GetDJIAQuotes();
             stockChart.DataSet = _dataset;
         }
 
@@ -50,7 +53,7 @@ namespace HackeratiStockChart
             {
                 var movingAverage = Averaging.SelectedIndex > 0 ? Convert.ToInt32(Averaging.SelectionBoxItem) : 0;
                 var entryName = StockSymbol.Text.ToUpper() + " (" + Averaging.SelectionBoxItem + ")";
-                var quoteList = GetQuotes(StockSymbol.Text, movingAverage);
+                var quoteList = GetQuotesForSymbol(StockSymbol.Text, movingAverage);
                 AddSeries(quoteList, entryName);
                 SymbolsAdded.Items.Add(entryName);
             }
@@ -72,6 +75,18 @@ namespace HackeratiStockChart
         {
             DeleteSeries(SymbolsAdded.SelectedItem.ToString());
             SymbolsAdded.Items.Remove(SymbolsAdded.SelectedItem);
+        }
+
+        private void ShowDJIA_Clicked(object sender, RoutedEventArgs e)
+        {
+            if (ShowDJIA.IsChecked == true)
+            {
+                AddSeries(DJIA, "DJIA");
+            }
+            else if (ShowDJIA.IsChecked == false)
+            {
+                DeleteSeries("DJIA");
+            }
         }
 
         // Business logic
@@ -115,7 +130,7 @@ namespace HackeratiStockChart
             }
         }
 
-        private SortedList<DateTime, double> GetQuotes(string symbol, int movingAverage)
+        private SortedList<DateTime, double> GetQuotesForSymbol(string symbol, int movingAverage)
         {
             // Build URL to retrieve stock quote history from Yahoo
             var url = String.Format("http://ichart.yahoo.com/table.csv?s={0}&a={1}&b={2}&c={3}&d={4}&e={5}&f={6}&g=d&ignore=.csv",
@@ -124,16 +139,50 @@ namespace HackeratiStockChart
             // Get a stream reader for the CSV-generating quote URL
             var quoteStream = new StreamReader(WebRequest.Create(url).GetResponse().GetResponseStream());
 
+            return ParseQuotesFromStream(movingAverage, quoteStream, 4);
+        }
+
+        private SortedList<DateTime, double> GetDJIAQuotes()
+        {
+            // Input the DJIA info from file
+            var djiaStream = new StreamReader("DJIA.csv");
+            var fullQuoteList = ParseQuotesFromStream(0, djiaStream, 1);
+
+            // Narrow down the DJIA info to the range we're interested in
+            var quoteList = new SortedList<DateTime, double>();
+            foreach (var quote in fullQuoteList)
+            {
+                if (quote.Key >= StartDate && quote.Key <= EndDate)
+                {
+                    quoteList.Add(quote.Key, quote.Value);
+                }
+            }
+            return quoteList;
+        }
+
+        private SortedList<DateTime, double> ParseQuotesFromStream(int movingAverage, StreamReader quoteStream, int indexForPrice)
+        {
             // Use the CSV reader to parse the dates and closing prices of the quotes
             var quoteList = new SortedList<DateTime, double>();
             using (CsvReader csv = new CsvReader(quoteStream, true))
             {
+                double close = 0.0;
                 while (csv.ReadNextRecord())
                 {
                     // Parse out parts of date and retrive closing price
                     var dateParts = new List<int>(csv[0].Split('-').Select(x => Convert.ToInt32(x)));
                     var date = new DateTime(dateParts[0], dateParts[1], dateParts[2]);
-                    var close = Convert.ToDouble(csv[4]);
+
+                    // The index for the price is different for the Yahoo quotes and the DJIA text file
+                    try
+                    {
+                        close = Convert.ToDouble(csv[indexForPrice]);
+                    }
+                    catch (FormatException)
+                    {
+                        // Just rely on the previous value
+                    }
+
                     quoteList[date] = close;
                 }
             }
